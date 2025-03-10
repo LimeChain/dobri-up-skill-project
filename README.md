@@ -1,4 +1,4 @@
-# Upskill Demo App
+# UpSKILL App
 
 This repository contains the server-side and client-side code for the project.
 

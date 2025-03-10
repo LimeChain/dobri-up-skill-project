@@ -13,11 +13,11 @@ const Header = () => {
         <Image
           alt="logo"
           src="/logo.png"
-          width={48}
-          height={48}
-          className="rounded-xl"
+          width={68}
+          height={68}
+          className="rounded-xl object-cover max-h-[48px]"
         />
-        <p className="text-2xl tracking-widest">AppName</p>
+        <p className="text-2xl tracking-widest font-medium">Page</p>
       </Link>
       <div className="flex-1 text-center">CENTER SECTION</div>
       <div>BUTTONS / MENU</div>
