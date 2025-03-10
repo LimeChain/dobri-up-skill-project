@@ -6,7 +6,7 @@ export default async function Register() {
   // TO DO: Add error state
   // TO DO: Add Metamask login option
   return (
-    <div className="p-4 rounded-2xl max-w-lg mx-auto bg-gray-100 shadow-lg">
+    <div className="p-4 rounded-2xl max-w-lg mx-auto bg-gray-100 shadow-md">
       <h2 className="text-3xl mx-3 mb-8 tracking-widest">REGISTER</h2>
       <form className="flex flex-col gap-4 w-full">
         <div className="flex flex-col">
@@ -60,7 +60,7 @@ export default async function Register() {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="hover:cursor-pointer hover:text-red-400 underline"
+            className="hover:cursor-pointer hover:text-red-400 underline font-medium"
           >
             Log In here!
           </Link>
