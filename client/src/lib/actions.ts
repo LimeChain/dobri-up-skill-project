@@ -3,7 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const register = async (prevState: any, registerFormData: FormData) => {
+export const register = async (_: unknown, registerFormData: FormData) => {
+  console.log("registerFormData", registerFormData);
   const res = false;
   if (!res) {
     return { message: "Error!" };
@@ -12,7 +13,8 @@ export const register = async (prevState: any, registerFormData: FormData) => {
   redirect("/");
 };
 
-export const login = async (prevState: any, loginFormData: FormData) => {
+export const login = async (_: unknown, loginFormData: FormData) => {
+  console.log("loginFormData", loginFormData);
   const res = false;
   if (!res) {
     return { message: "Error!" };
