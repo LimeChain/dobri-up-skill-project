@@ -21,6 +21,7 @@ export default async function SingleDevBlog({ params }: SingleDevBlogProps) {
       createdAt={blog.createdAt}
       createdBy={blog.createdBy}
       likesRef={blog.likesRef}
+      comment={blog.comment}
     />
   ) : (
     <p>

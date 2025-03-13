@@ -32,4 +32,11 @@ export type Blog = {
     picture: string;
   };
   createdAt: string;
+  comment: {
+    id: string;
+    userId: string;
+    content: string;
+    userImgUrl: string;
+    createdAt: string;
+  }[];
 };

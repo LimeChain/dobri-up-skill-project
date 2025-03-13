@@ -21,6 +21,7 @@ export default async function DevBlog() {
           createdAt={blog.createdAt}
           createdBy={blog.createdBy}
           likesRef={blog.likesRef}
+          comment={blog.comment}
         />
       ))}
     </>

@@ -21,6 +21,13 @@ const GET_ALL_BLOGS_QUERY = `
         picture
       }
       createdAt
+      comment {
+        id
+        userId
+        content
+        userImgUrl
+        createdAt
+      }
     }
   }
 `;
@@ -48,6 +55,13 @@ const GET_SINGLE_BLOG_QUERY = `
         picture
       }
       createdAt
+      comment {
+        id
+        userId
+        content
+        userImgUrl
+        createdAt
+      }
     }
   }
 `;
