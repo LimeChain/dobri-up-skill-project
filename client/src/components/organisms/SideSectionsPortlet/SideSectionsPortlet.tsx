@@ -9,21 +9,21 @@ const SideSectionsPortlet = ({ children }: SideSectionsPortletProps) => {
     <div className="flex gap-4 mx-2">
       <div className="flex-1/4 p-2 rounded-lg bg-gray-100 border-1 border-gray-200 shadow-md h-[100%]">
         <ul>
-          <li className="p-2 hover:underline hover:text-red-400 hover:cursor-pointer">
+          <li className="p-2 hover:text-red-400 hover:cursor-pointer transition">
             📧 Menu Item 1
           </li>
-          <li className="p-2 hover:underline hover:text-red-400 hover:cursor-pointer">
+          <li className="p-2 hover:text-red-400 hover:cursor-pointer transition">
             💾 Item Menu 2
           </li>
           <Link href="/dev-blog">
-            <li className="p-2 hover:underline hover:text-red-400 hover:cursor-pointer">
+            <li className="p-2 hover:text-red-400 hover:cursor-pointer transition">
               🖥️ Dev Blog
             </li>
           </Link>
-          <li className="p-2 hover:underline hover:text-red-400 hover:cursor-pointer">
+          <li className="p-2 hover:text-red-400 hover:cursor-pointer transition">
             🔍 Item Menu 4
           </li>
-          <li className="p-2 hover:underline hover:text-red-400 hover:cursor-pointer">
+          <li className="p-2 hover:text-red-400 hover:cursor-pointer transition">
             🔒 Menu Item 5
           </li>
         </ul>

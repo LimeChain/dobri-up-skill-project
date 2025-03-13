@@ -22,7 +22,7 @@ const LatestBlogs = async () => {
         <ul>
           {latestBlogs.map(({ id, title, createdAt }) => {
             return (
-              <li key={id} className="mb-4 hover:text-red-400">
+              <li key={id} className="mb-4 hover:text-red-400 transition">
                 <Link href={`/dev-blog/${id}`} className="flex gap-1">
                   <p className="text-sm flex-2/3">{title}</p>
                   <div className="flex-1/4 text-right">
