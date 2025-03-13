@@ -1,3 +1,4 @@
+import DateTime from "@/components/atoms/DateTime/DateTime";
 import { getBlogs } from "@/lib/hygraph";
 import { ResponseTypes } from "@/types";
 import { format } from "date-fns";
@@ -25,10 +26,8 @@ const LatestBlogs = async () => {
                 <Link href={`/dev-blog/${id}`} className="flex gap-1">
                   <p className="text-sm flex-2/3">{title}</p>
                   <div className="flex-1/4 text-right">
-                    <p className="text-xs">
-                      {format(createdAt, "dd MMMM yy ")}
-                    </p>
-                    <p className="text-xs">{format(createdAt, "kk:mm")}</p>
+                    <DateTime date={createdAt} formatStr="dd MMMM yy" />
+                    <DateTime date={createdAt} formatStr="kk:mm" />
                   </div>
                 </Link>
               </li>
