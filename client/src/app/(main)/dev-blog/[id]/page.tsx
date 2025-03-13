@@ -24,7 +24,7 @@ export default async function SingleDevBlog({ params }: SingleDevBlogProps) {
     />
   ) : (
     <p>
-      Blog <span className="font-bold">"{id}"</span> was not found...
+      Blog <span className="font-bold">&quot;{id}&quot;</span> was not found...
     </p>
   );
 }
