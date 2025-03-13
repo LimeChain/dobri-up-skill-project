@@ -1,6 +1,8 @@
-import { login } from "@/lib/actions";
-import Link from "next/link";
+"use client";
+
 import { useActionState } from "react";
+import Link from "next/link";
+import { login } from "@/lib/actions";
 
 export default function LoginForm() {
   // TO DO: Add handlers / form action
@@ -12,8 +14,11 @@ export default function LoginForm() {
     message: "",
   });
 
+  console.log("state", state);
+  console.log("pending", pending);
+
   return (
-    <div className="p-4 rounded-2xl max-w-lg mx-auto bg-gray-100 shadow-md">
+    <div className="p-4 rounded-2xl max-w-lg mx-auto bg-gray-100 border-1 border-gray-200 shadow-md">
       <h2 className="text-3xl mx-3 mb-8 tracking-widest">LOGIN</h2>
       <form action={formAction} className="flex flex-col gap-4 w-full">
         <div className="flex flex-col">
@@ -43,7 +48,7 @@ export default function LoginForm() {
       </form>
       <div className="mt-4">
         <p className="text-xs text-right">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/register"
             className="hover:cursor-pointer hover:text-red-400 underline font-medium"

@@ -14,8 +14,10 @@ export default function RegisterForm() {
     message: "",
   });
 
+  console.log("state", state);
+
   return (
-    <div className="p-4 rounded-2xl max-w-lg mx-auto bg-gray-100 shadow-md">
+    <div className="p-4 rounded-2xl max-w-lg mx-auto bg-gray-100 border-1 border-gray-200 shadow-md">
       <h2 className="text-3xl mx-3 mb-8 tracking-widest">REGISTER</h2>
       <form action={formAction} className="flex flex-col gap-4 w-full">
         <div className="flex flex-col">
