@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import { errorFormat } from "@/utils/errorFormat";
-import { Blog, DataResponse, ResponseTypes } from "@/types";
+import { Blog, BlogComment, DataResponse, ResponseTypes } from "@/types";
 import { queryConfig } from "./queries";
 
 const HYGRAPH_API = process.env.HYGRAPH_CONTENT_API ?? "";
@@ -125,12 +125,6 @@ export const createBlogLike = async (
       };
     }
 
-    console.log("blogId", blogId);
-
-    console.log("userId", userId);
-
-    console.log("json", json);
-
     const createdLike = json.data.createLike;
 
     if (createdLike.id) {
@@ -156,6 +150,72 @@ export const createBlogLike = async (
     message: "Unknown error: Failed to like the blog post",
     type: ResponseTypes.ERROR,
   };
+};
+
+export const createBlogComment = async (
+  blogId: string,
+  comment: string
+): Promise<DataResponse<null>> => {
+  if (!comment || !comment.length) {
+    return {
+      data: null,
+      message: "No comment value to store!",
+      type: ResponseTypes.ERROR,
+    };
+  }
+
+  // TO DO: Get user name and image prom the login info
+  const userCommentData: Pick<
+    BlogComment,
+    "userId" | "content" | "userImgUrl"
+  > = {
+    userId: "Some Username",
+    content: comment,
+    userImgUrl: "/user5.png",
+  };
+
+  try {
+    const q = queryConfig({ blogId, ...userCommentData }).createComment;
+
+    const response = await fetch(HYGRAPH_API, {
+      method: "POST",
+      headers: {
+        Authorization: HYGRAPH_TOKEN,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(q),
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      return {
+        data: null,
+        message: json.errors[0].message,
+        type: ResponseTypes.ERROR,
+      };
+    }
+
+    const createdComment = json.data.createComment;
+
+    if (createdComment.id) {
+      const publishedComment = await publishComment(createdComment.id);
+
+      if (publishedComment.id) {
+        const publishedBlog = await publishBlog(publishedComment.blog.id);
+
+        if (publishedBlog.id) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+          revalidateTag("all-blogs");
+          return { data: null, message: null, type: ResponseTypes.SUCCESS };
+        }
+      }
+    }
+    return { data: null, message: null, type: ResponseTypes.SUCCESS };
+  } catch (error) {
+    const err = errorFormat(error);
+    return { data: null, message: err, type: ResponseTypes.ERROR };
+  }
 };
 
 export const publishBlog = async (blogId: string) => {
@@ -193,9 +253,30 @@ export const publishLike = async (likeId: string) => {
 
     const json = await response.json();
 
-    console.log("json like", json);
     const publishedLike = json.data.publishLike;
     return publishedLike;
+  } catch (error) {
+    const err = errorFormat(error);
+    return { message: err, type: "error" };
+  }
+};
+
+export const publishComment = async (commentId: string) => {
+  const q = queryConfig({ commentId }).publishComment;
+  try {
+    const response = await fetch(HYGRAPH_API, {
+      method: "POST",
+      headers: {
+        Authorization: HYGRAPH_TOKEN,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(q),
+    });
+
+    const json = await response.json();
+
+    const publishedComment = json.data.publishComment;
+    return publishedComment;
   } catch (error) {
     const err = errorFormat(error);
     return { message: err, type: "error" };

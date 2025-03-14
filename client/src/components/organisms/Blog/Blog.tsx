@@ -1,8 +1,8 @@
 import Image from "next/image";
 import LikeBlog from "@/components/molecules/LikeBlog/LikeBlog";
-import { Blog as BlogType } from "@/types";
-import { format } from "date-fns";
 import DateTime from "@/components/atoms/DateTime/DateTime";
+import { Blog as BlogType } from "@/types";
+import CommentsSection from "@/components/molecules/CommentsSection/CommentsSection";
 
 type BlogProps = BlogType;
 
@@ -15,6 +15,7 @@ const Blog = ({
   image,
   title,
   likesRef,
+  comment,
 }: BlogProps) => {
   return (
     <div
@@ -26,9 +27,9 @@ const Blog = ({
         <Image
           alt="publisher"
           src={createdBy.picture}
-          width={40}
-          height={40}
-          className="rounded-full"
+          width={46}
+          height={46}
+          className="border-2 border-gray-300 rounded-full"
         />
         <p>{createdBy.name}</p>
         <DateTime
@@ -49,7 +50,7 @@ const Blog = ({
         />
       )}
       <LikeBlog blogId={id} likesCount={likesRef.length} />
-      <div className="">COMMENTS</div>
+      <CommentsSection comment={comment} id={id} />
     </div>
   );
 };
