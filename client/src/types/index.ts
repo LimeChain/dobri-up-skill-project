@@ -14,10 +14,7 @@ export type Blog = {
   id: string;
   title: string;
   content: string;
-  likesRef: {
-    id: string;
-    userId: string;
-  }[];
+  likesRef: BlogLikes[];
   image: {
     url: string;
     width: number;
@@ -32,11 +29,18 @@ export type Blog = {
     picture: string;
   };
   createdAt: string;
-  comment: {
-    id: string;
-    userId: string;
-    content: string;
-    userImgUrl: string;
-    createdAt: string;
-  }[];
+  comment: BlogComment[];
+};
+
+export type BlogLikes = {
+  id: string;
+  userId: string;
+};
+
+export type BlogComment = {
+  id: string;
+  userId: string;
+  content: string;
+  userImgUrl: string;
+  createdAt: string;
 };

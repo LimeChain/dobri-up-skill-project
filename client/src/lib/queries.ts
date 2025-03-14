@@ -21,7 +21,7 @@ const GET_ALL_BLOGS_QUERY = `
         picture
       }
       createdAt
-      comment {
+      comment(orderBy: createdAt_DESC, first: 100) {
         id
         userId
         content
@@ -55,7 +55,7 @@ const GET_SINGLE_BLOG_QUERY = `
         picture
       }
       createdAt
-      comment {
+      comment(orderBy: createdAt_DESC, first: 100) {
         id
         userId
         content
@@ -103,13 +103,40 @@ const PUBLISH_LIKE_MUTATION = `
                       }
           `;
 
+const CREATE_COMMENT_MUTATION = `
+  mutation($userId: String!, $userImgUrl: String!, $content: String!, $blogId: ID!) {
+    createComment(data: {
+      userId: $userId
+      userImgUrl: $userImgUrl
+      content: $content
+      blog: {
+        connect: { id: $blogId }
+      }
+    })
+    { id }
+  }
+`;
+
+const PUBLISH_COMMENT_MUTATION = `
+  mutation($commentId: ID!) {
+    publishComment(where: { id: $commentId }, to: PUBLISHED) {
+      id
+      blog {
+        id
+      }
+    }
+  }
+`;
+
 export const queryConfig = (params: {
   blogId?: string;
   userId?: string;
   likeId?: string;
   first?: string;
+  content?: string;
+  userImgUrl?: string;
+  commentId?: string;
 }) => {
-  console.log("params", params);
   return {
     getAllBlogs: {
       query: GET_ALL_BLOGS_QUERY,
@@ -133,6 +160,24 @@ export const queryConfig = (params: {
       : null,
     publishLike: params.likeId
       ? { query: PUBLISH_LIKE_MUTATION, variables: { likeId: params.likeId } }
+      : null,
+    createComment:
+      params.blogId && params.userId && params.content && params.userImgUrl
+        ? {
+            query: CREATE_COMMENT_MUTATION,
+            variables: {
+              blogId: params.blogId,
+              userId: params.userId,
+              content: params.content,
+              userImgUrl: params.userImgUrl,
+            },
+          }
+        : null,
+    publishComment: params.commentId
+      ? {
+          query: PUBLISH_COMMENT_MUTATION,
+          variables: { commentId: params.commentId },
+        }
       : null,
   };
 };
