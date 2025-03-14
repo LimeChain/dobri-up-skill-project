@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef } from "react";
+import { ComponentPropsWithRef } from "react";
 import { timeAgo } from "@/utils/timeAgoFormat";
 
 interface TimeAgoProps extends ComponentPropsWithRef<"p"> {

@@ -31,6 +31,7 @@ const LikeBlog = ({ blogId, likesCount }: LikeBlogProps) => {
         onClick={handleBlogLike}
         className="hover:text-red-400 hover:scale-110 transition"
       >
+        {/* TO DO: If liked: className="fill-red-200 text-red-500" */}
         <FiThumbsUp size="22" />
       </button>
       {likesCount}

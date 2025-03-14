@@ -1,9 +1,8 @@
+import Link from "next/link";
 import DateTime from "@/components/atoms/DateTime/DateTime";
+
 import { getBlogs } from "@/lib/hygraph";
 import { ResponseTypes } from "@/types";
-import { format } from "date-fns";
-import Link from "next/link";
-import React from "react";
 
 const LatestBlogs = async () => {
   const q = `

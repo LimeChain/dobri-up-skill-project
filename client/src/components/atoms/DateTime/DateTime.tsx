@@ -1,5 +1,5 @@
+import { ComponentPropsWithRef } from "react";
 import { DateArg, format, FormatOptions } from "date-fns";
-import React, { ComponentPropsWithRef } from "react";
 
 interface DateTimeProps extends ComponentPropsWithRef<"p"> {
   date: DateArg<Date> & {};
