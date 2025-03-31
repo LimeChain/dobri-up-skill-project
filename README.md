@@ -70,4 +70,6 @@ This repository contains the server-side and client-side code for the project.
 
 - [ ] Implement RBAC
 
+- [ ] Add configuration and documentation for Swagger
+
 ---
