@@ -26,7 +26,9 @@ This repository contains the server-side and client-side code for the project.
 
 ## 🖥 Server & Database
 
-- TBD
+- NestJS
+- TypeORM
+- PostgreSQL
 
 ---
 
@@ -34,7 +36,7 @@ This repository contains the server-side and client-side code for the project.
 
 ### FE
 
-- [ ] Research NextJS
+- [x] Research NextJS
 
 - [ ] Research server-side rendering
 
@@ -58,7 +60,7 @@ This repository contains the server-side and client-side code for the project.
 
 - [ ] Implement basic project
 
-- [ ] Use NestJs framework
+- [x] Use NestJs framework
 
 - [ ] Implement JWT authentication
 
@@ -66,6 +68,6 @@ This repository contains the server-side and client-side code for the project.
 
 ## ⭐ Secondary Goals
 
-- TBD
+- [ ] Implement RBAC
 
 ---
