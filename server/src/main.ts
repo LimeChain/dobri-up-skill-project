@@ -9,7 +9,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1');
 
   app.enableCors({
-    origin: configService.get<string>('ORIGIN'),
+    origin: configService.get<string>('ORIGINS'),
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 

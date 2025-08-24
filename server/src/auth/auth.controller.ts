@@ -1,14 +1,9 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class AuthController {
-  @Post('resiter')
-  register() {
-    return 'register';
-  }
-
-  @Get('login')
-  login() {
-    return 'login';
+  constructor(private jwtService: JwtService) {
+    // TO DO
   }
 }
