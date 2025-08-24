@@ -1,11 +1,12 @@
-import { IsEmail, IsString, IsUUID, IsEnum } from 'class-validator';
-import { UserRole } from '../auth/roles/role.enum';
+import { IsEmail, IsString, IsUUID, IsEnum, IsOptional } from 'class-validator';
+import { UserRole } from '../../auth/roles/role.enum';
 
 export class CreateUserDto {
   @IsString()
-  firstaName: string;
+  firstName: string;
 
   @IsString()
+  @IsOptional()
   lastName: string;
 
   @IsString()
