@@ -1,13 +1,25 @@
 "use client";
 
 import { useActionState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { login } from "@/lib/actions";
+import { useAuthStore } from "@/lib/store";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const setAuth = useAuthStore((state) => state.setAuth);
   const [state, formAction, pending] = useActionState(login, {
     message: "",
   });
+
+  useEffect(() => {
+    if (state?.user) {
+      setAuth(state.user);
+      router.push("/");
+    }
+  }, [state, setAuth, router]);
 
   const { errors } = state || {};
   const fieldErrors: Record<string, string[]> = errors?.fieldErrors || {};
@@ -34,7 +46,13 @@ export default function LoginForm() {
       <h2 className="text-3xl mx-3 mb-8 tracking-widest">LOGIN</h2>
 
       {state?.message && (
-        <div className="mb-4 p-3 rounded-lg text-sm bg-red-100 text-red-700 border border-red-300">
+        <div
+          className={`mb-4 p-3 rounded-lg text-sm border ${
+            state.message.includes("Successful")
+              ? "bg-green-100 text-green-700 border-green-300"
+              : "bg-red-100 text-red-700 border-red-300"
+          }`}
+        >
           {state.message}
         </div>
       )}

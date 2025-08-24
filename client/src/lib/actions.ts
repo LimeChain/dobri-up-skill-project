@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { API_URL, AUTH_ENDPONIT } from "@/constants";
+import { API_URL, AUTH_ENDPONIT, USER_ENDPOINT } from "@/constants";
 
 const registerSchema = z
   .object({
@@ -34,12 +34,15 @@ export const register = async (_: unknown, registerFormData: FormData) => {
   }
 
   try {
-    const { repeatPassword, ...registerData } = validation.data;
-
     const response = await fetch(`${API_URL}${AUTH_ENDPONIT}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(registerData),
+      body: JSON.stringify({
+        firstName: validation.data.firstName,
+        lastName: validation.data.lastName,
+        email: validation.data.email,
+        password: validation.data.password,
+      }),
     });
 
     if (!response.ok) {
@@ -47,20 +50,10 @@ export const register = async (_: unknown, registerFormData: FormData) => {
       return { message: errorData.message || "Registration failed" };
     }
 
-    const userData = await response.json();
-
-    (await cookies()).set({
-      name: "token",
-      value: userData.access_token,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    });
-  } catch (error) {
+    return { message: "Successful registration! You can Login now." };
+  } catch {
     return { message: "Registration failed. Please try again." };
   }
-
-  redirect("/");
 };
 
 export const login = async (_: unknown, loginFormData: FormData) => {
@@ -84,22 +77,55 @@ export const login = async (_: unknown, loginFormData: FormData) => {
     }
 
     const userData = await response.json();
+    const token = userData.access_token;
 
     (await cookies()).set({
       name: "token",
-      value: userData.access_token,
+      value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
     });
-  } catch (error) {
+
+    const userResponse = await fetch(`${API_URL}${USER_ENDPOINT}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (userResponse.ok) {
+      const user = await userResponse.json();
+      return {
+        message: "Successful login!",
+        user,
+        token,
+      };
+    }
+  } catch {
     return { message: "Login failed. Please try again." };
   }
-
-  redirect("/");
 };
 
 export const logout = async () => {
   (await cookies()).delete("token");
   redirect("/login");
+};
+
+export const getCurrentUser = async (token: string) => {
+  try {
+    const response = await fetch(`${API_URL}${USER_ENDPOINT}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return await response.json();
+    }
+    return null;
+  } catch {
+    return null;
+  }
 };

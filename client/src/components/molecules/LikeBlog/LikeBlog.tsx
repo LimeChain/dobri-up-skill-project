@@ -5,6 +5,7 @@ import { createBlogLike } from "@/lib/hygraph";
 import { ToastContainer, toast } from "react-toastify";
 import { ResponseTypes } from "@/types";
 import { FiThumbsUp } from "react-icons/fi";
+import { useAuthStore } from "@/lib/store";
 
 type LikeBlogProps = {
   blogId: string;
@@ -13,10 +14,17 @@ type LikeBlogProps = {
 
 const LikeBlog = ({ blogId, likesCount }: LikeBlogProps) => {
   const [pending, start] = useTransition();
+  const user = useAuthStore((state) => state.user);
 
   const handleBlogLike = () => {
+    if (!user) {
+      toast.error("Please login to like blogs", {
+        position: "bottom-right",
+      });
+      return;
+    }
     start(async () => {
-      const { type, message } = await createBlogLike(blogId);
+      const { type, message } = await createBlogLike(blogId, user.id);
 
       if (type === ResponseTypes.ERROR) {
         toast.error(message, { position: "bottom-right" });

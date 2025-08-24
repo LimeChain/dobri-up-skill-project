@@ -76,7 +76,8 @@ export const getBlog = async (
 };
 
 export const createBlogLike = async (
-  blogId: string
+  blogId: string,
+  userId: string
 ): Promise<DataResponse<null>> => {
   if (!blogId)
     return {
@@ -85,8 +86,12 @@ export const createBlogLike = async (
       type: ResponseTypes.ERROR,
     };
 
-  // TO DO: Will be taken from cookie
-  const userId = "Kristina Kirova 5";
+  if (!userId)
+    return {
+      data: null,
+      message: "User ID was not provided",
+      type: ResponseTypes.ERROR,
+    };
 
   const blogToCheck = await getBlog(blogId);
 
@@ -154,7 +159,10 @@ export const createBlogLike = async (
 
 export const createBlogComment = async (
   blogId: string,
-  comment: string
+  comment: string,
+  userId: string,
+  userName: string,
+  userImgUrl?: string
 ): Promise<DataResponse<null>> => {
   if (!comment || !comment.length) {
     return {
@@ -164,14 +172,21 @@ export const createBlogComment = async (
     };
   }
 
-  // TO DO: Get user name and image prom the login info
+  if (!userId) {
+    return {
+      data: null,
+      message: "User ID was not provided",
+      type: ResponseTypes.ERROR,
+    };
+  }
+
   const userCommentData: Pick<
     BlogComment,
     "userId" | "content" | "userImgUrl"
   > = {
-    userId: "Some Username",
+    userId: userName,
     content: comment,
-    userImgUrl: "/user5.png",
+    userImgUrl: userImgUrl || "/user5.png",
   };
 
   try {

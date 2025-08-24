@@ -5,14 +5,26 @@ import { toast } from "react-toastify";
 import { BiCommentAdd } from "react-icons/bi";
 import { createBlogComment } from "@/lib/hygraph";
 import { Blog, ResponseTypes } from "@/types";
+import { useAuthStore } from "@/lib/store";
 
 type InputCommentProps = Pick<Blog, "id">;
 
 const InputComment = ({ id }: InputCommentProps) => {
   const [inputValue, setInputValue] = useState("");
+  const user = useAuthStore((state) => state.user);
 
   const handleAddComment = async () => {
-    const { message, type } = await createBlogComment(id, inputValue);
+    if (!user) {
+      toast.error("Please login to add comments", { position: "bottom-right" });
+      return;
+    }
+    console.log("user", user);
+    const { message, type } = await createBlogComment(
+      id,
+      inputValue,
+      user.id,
+      user.lastName ? `${user.firstName} ${user.lastName}` : user.firstName
+    );
 
     if (type === ResponseTypes.ERROR) {
       toast.error(message, { position: "bottom-right" });
