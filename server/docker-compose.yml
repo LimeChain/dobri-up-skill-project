@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: dobri-up-skill-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dobri_up_skill_db
+      POSTGRES_USER: open
+      POSTGRES_PASSWORD: no-password
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - dobri-network
+
+volumes:
+  postgres_data:
+
+networks:
+  dobri-network:
+    driver: bridge
