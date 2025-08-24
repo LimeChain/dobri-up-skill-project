@@ -15,7 +15,7 @@ const Header = () => {
           src="/logo.png"
           width={68}
           height={68}
-          className="rounded-xl object-cover max-h-[48px]"
+          className="rounded-xl object-cover max-h-[48px] w-auto h-auto"
         />
         <p className="text-2xl tracking-widest font-medium">Page</p>
       </Link>
