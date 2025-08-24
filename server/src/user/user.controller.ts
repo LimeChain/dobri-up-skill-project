@@ -11,6 +11,8 @@ import { Request } from 'express';
 interface AuthenticatedRequest extends Request {
   user: {
     email: string;
+    firstName: string;
+    lastName: string | null | undefined;
     sub: string;
     role: string;
     iat?: number;
@@ -33,6 +35,8 @@ export class UserController {
     return {
       id: request.user.sub,
       email: request.user.email,
+      firstName: request.user.firstName,
+      lastName: request.user.lastName,
       role: request.user.role,
     };
   }
